@@ -214,5 +214,8 @@ So to summarize the following uses a threadpool:
 
 ### Addressing Security vulnerabilities
 
-[Open source security platform](https://snyk.io/)
-[Snyk quick start](https://www.youtube.com/watch?v=l1MT5lr4p9o)
+- [Open source security platform: Synk](https://snyk.io/)
+- [Snyk quick start](https://www.youtube.com/watch?v=l1MT5lr4p9o)
+
+### Monitoring the event loop
+# TODO
