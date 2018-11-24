@@ -85,4 +85,7 @@ asyncForEach([1,2,3,4], function(i) {
 So in this case at each iteration, if the processing that we are doing is slow then the entire execution incase of the async version will happen faster.
 
 *FunFact: The browser would try to repaint the page every 16.6 ms(60fps). But it is constrained by what you are doing in javascript so obviously it cannot render if there is still code getting executed in the stack. There actually exists a different queue called the render queue and that is given more priority than the callback/task queue to push onto the call stack*
- 
+
+For more on eventloops have a look at these links:
+[https://www.youtube.com/watch?v=8aGhZQkoFbQ&vl=en](https://www.youtube.com/watch?v=8aGhZQkoFbQ&vl=en)
+[https://www.youtube.com/watch?v=qV8FgRt-HJI](https://www.youtube.com/watch?v=qV8FgRt-HJI)
