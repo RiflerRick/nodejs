@@ -87,5 +87,26 @@ So in this case at each iteration, if the processing that we are doing is slow t
 *FunFact: The browser would try to repaint the page every 16.6 ms(60fps). But it is constrained by what you are doing in javascript so obviously it cannot render if there is still code getting executed in the stack. There actually exists a different queue called the render queue and that is given more priority than the callback/task queue to push onto the call stack*
 
 For more on eventloops have a look at these links:
-[https://www.youtube.com/watch?v=8aGhZQkoFbQ&vl=en](https://www.youtube.com/watch?v=8aGhZQkoFbQ&vl=en)
-[https://www.youtube.com/watch?v=qV8FgRt-HJI](https://www.youtube.com/watch?v=qV8FgRt-HJI)
+- [Philip Roberts JSConfEU](https://www.youtube.com/watch?v=8aGhZQkoFbQ&vl=en) 
+- [Bryan Hughes NodeJs Interactive North America](https://www.youtube.com/watch?v=qV8FgRt-HJI)
+- [Sam Roberts NodeJs Interactive North America](https://www.youtube.com/watch?v=P9csgxBgaZ8)
+
+Nodejs has an underlying layer of c++ code that runs beneath it. When we run node synchornously node will always run the operation in a single thread which is called the main thread. However when an async function is written in node, the C++ APIs will be used in order to do one of 2 things. When node is started it is always started with a thread pool of 4 threads by default(although this can be changed obviously). Depending on the kind of task(network based, file IO, unix/file sockets ...), node may either try to allocate one of the threads from its thread pool(if the thread is free) to handle the async operation or it may assign that task to C++ async. All this detail is obviously abstracted away from the developer whose purpose in life is essentially to get the application running.   
+
+### Node Event loop inside out
+```
+int s = socket(); // basically a socket system call
+```
+The socket system call returns an integer and it is called a file descriptor. File descriptors in general in unix may refer to an actual file descriptor of a file or it may refer to a socket. A file descriptor is basically an integer offset of an array that is kept in the kernel. Every process has an array of file descriptors and that array then has a pointer to an object which is the open control block for whichever resource is attached to the file descriptor and that has a pointer to a virtual function table(*note: whenever a class defines a virtual function, most compilers add a hidden member variable to that class that points to an array of pointers to virtual functions called the virtual method table. A vitual function is basically one which can be overriden in a subclass and essentially manifests in the form of dynamic dispatch or runtime polymorphism*). So in this context it allows for files, sockets and the like to all support **READ** however read does  different things based on what the underlying resource is for instance reading a file is different from reading a socket stream. 
+
+```
+// pseudo code
+int server = socket();
+bind(server, 80);
+listen(server); // until listen is called the socket can be used both for accepting connections as well as for making connections
+
+while (int connection == accept(server)) {
+    pthread_create(echo, connection);    
+}
+```
+
