@@ -212,12 +212,13 @@ So to summarize the following uses a threadpool:
 #### Promises:
 
 -[Writing neat async nodejs code with promise](https://medium.com/dev-bits/writing-neat-asynchronous-node-js-code-with-promises-32ed3a4fd098)
-A small example:
-![async await](https://raw.githubusercontent.com/RiflerRick/nodejs/master/static/Screenshot%20from%202018-11-25%2014-40-09.png)
 
 #### AsyncAwait:
 
 -[docs on asyncawait](https://www.npmjs.com/package/asyncawait)
+
+A small example:
+![async await](https://raw.githubusercontent.com/RiflerRick/nodejs/master/static/Screenshot%20from%202018-11-25%2014-40-09.png)
 
 ### Profiling nodejs
 
